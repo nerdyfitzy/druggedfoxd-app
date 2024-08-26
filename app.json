@@ -37,7 +37,8 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.kayleefitzy.druggedfoxd"
     },
     "android": {
       "adaptiveIcon": {

@@ -1,28 +1,40 @@
-import { Stack } from 'expo-router';
-import React, { useState } from 'react';
-import { Keyboard, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { useRouter, Stack } from 'expo-router';
+import React, { useCallback } from 'react';
+import { Alert, Keyboard, TouchableWithoutFeedback, View, AppState } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { H2, YStack, Text } from 'tamagui';
 import EmailAuth from '~/components/auth/EmailAuth';
-import OAuth from '~/components/auth/OAuth';
+import { supabase } from '~/lib/supabase';
+import { useAuthStore } from '~/state/authStore';
+import { useLoadingStore } from '~/state/loadingStore';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-  },
-  row: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 4,
-  },
+AppState.addEventListener('change', (state) => {
+  if (state === 'active') {
+    supabase.auth.startAutoRefresh();
+  } else {
+    supabase.auth.stopAutoRefresh();
+  }
 });
 
 const Login = () => {
+  const { loading, setLoading } = useLoadingStore();
+  const { logIn, isLoggedIn } = useAuthStore((state) => ({
+    logIn: state.logIn,
+    isLoggedIn: state.isLoggedIn,
+  }));
+  const router = useRouter();
+  if (isLoggedIn) {
+    router.replace('/(tabs)/');
+  }
+  const handleSubmit = useCallback(
+    async (email: string, password: string) => {
+      setLoading(true);
+      const error = await logIn(email, password);
+      if (error) Alert.alert(error.message);
+      else setLoading(false);
+    },
+    [logIn, setLoading]
+  );
   return (
     <>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -42,12 +54,8 @@ const Login = () => {
                   to browse and watch Druggedfox lessons.{' '}
                 </Text>
               </View>
-              <EmailAuth />
-              <Text color="$gray10Light" textAlign="center">
-                or
-              </Text>
+              <EmailAuth submit={handleSubmit} loading={loading} />
             </View>
-            <OAuth />
           </YStack>
         </SafeAreaView>
       </TouchableWithoutFeedback>
