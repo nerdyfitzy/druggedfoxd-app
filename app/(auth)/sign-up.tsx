@@ -34,7 +34,7 @@ const SignUp = () => {
     [signUp, setLoading]
   );
 
-  if (isLoggedIn) router.replace('/(tabs)/');
+  if (isLoggedIn) router.replace('/(tabs)allPosts');
 
   return (
     <>

@@ -24,7 +24,7 @@ const Login = () => {
   }));
   const router = useRouter();
   if (isLoggedIn) {
-    router.replace('/(tabs)/');
+    router.replace('/(tabs)allPosts');
   }
   const handleSubmit = useCallback(
     async (email: string, password: string) => {

@@ -41,7 +41,7 @@ const Home = () => {
   }, []);
   console.log('i am here', isLoggedIn);
   return isLoggedIn ? (
-    <Redirect href="/(tabs)/" />
+    <Redirect href="/allPosts" />
   ) : (
     <SafeAreaView style={styles.container}>
       <Image source={images.LogoDark} resizeMode="contain" style={styles.image} />

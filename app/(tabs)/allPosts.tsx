@@ -1,14 +1,13 @@
 import { Stack } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
-
-import { ScreenContent } from '~/components/ScreenContent';
+import { Text } from 'tamagui';
 
 export default function Home() {
   return (
     <>
-      <Stack.Screen options={{ title: 'Tab One' }} />
+      <Stack.Screen options={{ title: 'All Posts' }} />
       <View style={styles.container}>
-        <ScreenContent path="app/(tabs)/index.tsx" title="Tab One" />
+        <Text>IN all Posts</Text>
       </View>
     </>
   );

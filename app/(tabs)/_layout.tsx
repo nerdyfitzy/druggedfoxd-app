@@ -1,6 +1,5 @@
 import { Link, Redirect, Tabs } from 'expo-router';
 
-import { HeaderButton } from '../../components/HeaderButton';
 import { TabBarIcon } from '../../components/TabBarIcon';
 import { useAuthStore } from '~/state/authStore';
 
@@ -11,24 +10,35 @@ export default function TabLayout() {
       {!isLoggedIn ? (
         <Redirect href="/" />
       ) : (
-        <Tabs
-          screenOptions={{
-            tabBarActiveTintColor: 'black',
-          }}>
+        <Tabs>
           <Tabs.Screen
-            name="index"
+            name="allPosts"
             options={{
               title: 'All Posts',
               tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
             }}
           />
-          {/* <Tabs.Screen
-        name="new-uploads"
-        options={{
-          title: 'New Uploads',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      /> */}
+          <Tabs.Screen
+            name="newUploads"
+            options={{
+              title: 'New Uploads',
+              tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+            }}
+          />
+          <Tabs.Screen
+            name="bookmarked"
+            options={{
+              title: 'Bookmarked',
+              tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+            }}
+          />
+          <Tabs.Screen
+            name="watched"
+            options={{
+              title: 'Watched',
+              tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+            }}
+          />
         </Tabs>
       )}
     </>
