@@ -11,7 +11,7 @@ type AuthState = {
   signOut: (() => Promise<AuthError | null>) | null;
 };
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+export const useAuthStore = create<AuthState>((set) => ({
   isLoggedIn: false,
   setIsLoggedIn: (isLoggedIn: boolean) => {
     set({ isLoggedIn });

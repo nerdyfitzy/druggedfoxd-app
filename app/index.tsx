@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../constants/images';
 import { Button, Text } from 'tamagui';
 import { Link, Redirect } from 'expo-router';
-import { supabase } from '~/lib/supabase';
 import { useAuthStore } from '~/state/authStore';
 
 const styles = StyleSheet.create({
@@ -19,9 +18,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
-    color: '',
-  },
 });
 
 const Home = () => {
@@ -31,28 +27,32 @@ const Home = () => {
     setIsLoggedIn: state.setIsLoggedIn,
   }));
   useEffect(() => {
-    const set = async () => {
+    const fetchUser = async () => {
       const {
         data: { user },
       } = await getUser();
       setIsLoggedIn(user ? true : false);
     };
-    set();
+    fetchUser();
   }, []);
   console.log('i am here', isLoggedIn);
-  return isLoggedIn ? (
-    <Redirect href="/allPosts" />
-  ) : (
-    <SafeAreaView style={styles.container}>
-      <Image source={images.LogoDark} resizeMode="contain" style={styles.image} />
-      <Link href="/(auth)/log-in" asChild>
-        <Button width={250}>Log in</Button>
-      </Link>
-      <Text color="$gray10Light">or</Text>
-      <Link href="/(auth)/sign-up" asChild>
-        <Button width={250}>Sign up</Button>
-      </Link>
-    </SafeAreaView>
+  return (
+    <>
+      {isLoggedIn ? (
+        <Redirect href="/allPosts" />
+      ) : (
+        <SafeAreaView style={styles.container}>
+          <Image source={images.LogoDark} resizeMode="contain" style={styles.image} />
+          <Link href="/(auth)/log-in" asChild>
+            <Button width={250}>Log in</Button>
+          </Link>
+          <Text color="$gray10Light">or</Text>
+          <Link href="/(auth)/sign-up" asChild>
+            <Button width={250}>Sign up</Button>
+          </Link>
+        </SafeAreaView>
+      )}
+    </>
   );
 };
 
