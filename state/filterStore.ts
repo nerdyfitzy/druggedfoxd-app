@@ -1,10 +1,7 @@
 import { create } from 'zustand';
+import { Filters } from '~/constants/types';
 
-type FilterStore = {
-  character: string | undefined;
-  opponent: string | undefined;
-  notes: string | undefined;
-  timestamped: boolean;
+type FilterStore = Filters & {
   setCharacter: (character: string | undefined) => void;
   setOpponent: (opponent: string | undefined) => void;
   setNotes: (notes: string | undefined) => void;

@@ -8,3 +8,10 @@ export type Lesson = {
   player: string;
   timestamped: boolean;
 };
+
+export type Filters = {
+  character: string | undefined;
+  opponent: string | undefined;
+  notes: string | undefined;
+  timestamped: boolean;
+};

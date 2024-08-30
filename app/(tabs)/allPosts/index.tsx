@@ -7,7 +7,7 @@ import { getLessons } from '~/lib/lesson/lessons';
 import { useLessonStore } from '~/state/lessonStore';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { Filter } from 'lucide-react-native';
-import { useModalStore } from '~/state/filterStore';
+import { useFilterStore, useModalStore } from '~/state/filterStore';
 import FilterModal from '~/components/FilterModal';
 
 const dummy = [
@@ -25,17 +25,23 @@ const dummy = [
 
 export default function AllPosts() {
   const { lessons, setLessons, totalAmount, setTotalAmount } = useLessonStore();
-  const setIsOpen = useModalStore((state) => state.setIsOpen);
+  const { character, opponent, notes, timestamped } = useFilterStore((state) => ({
+    character: state.character,
+    opponent: state.opponent,
+    notes: state.notes,
+    timestamped: state.timestamped,
+  }));
+  const { isOpen, setIsOpen } = useModalStore();
   const headerHeight = useHeaderHeight();
 
   useEffect(() => {
     const getFromDB = async () => {
-      const { data, count } = await getLessons();
+      const { data, count } = await getLessons({ character, opponent, notes, timestamped });
       setLessons(data);
       setTotalAmount(count || 0);
     };
-    getFromDB();
-  }, []);
+    if (!isOpen) getFromDB();
+  }, [isOpen]);
 
   return (
     <>
