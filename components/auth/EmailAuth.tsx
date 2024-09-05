@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 35,
     right: 10,
+    zIndex: 5000,
   },
 });
 
@@ -60,6 +61,7 @@ const EmailAuth = ({ signUp = false, loading, submit }: EmailAuthProps) => {
       <YStack>
         <Label fontSize="$4">Email</Label>
         <Input
+          keyboardType="email-address"
           onChangeText={(v) => setEmail(v)}
           value={email}
           placeholder="kayleefitzy@gmail.com"
@@ -67,7 +69,7 @@ const EmailAuth = ({ signUp = false, loading, submit }: EmailAuthProps) => {
           inputMode="email"
         />
       </YStack>
-      <YStack>
+      <YStack position="relative">
         <Label fontSize="$4">Password</Label>
         <Input
           placeholder="Enter Password"
@@ -77,11 +79,13 @@ const EmailAuth = ({ signUp = false, loading, submit }: EmailAuthProps) => {
           onChangeText={(v) => setPassword(v)}
           value={password}
         />
-        {!showPW ? (
-          <Eye style={styles.icon} onPress={() => setShowPW(!showPW)} />
-        ) : (
-          <EyeOff style={styles.icon} onPress={() => setShowPW(!showPW)} />
-        )}
+        <TouchableWithoutFeedback style={styles.icon} onPress={() => setShowPW(!showPW)}>
+          {!showPW ? (
+            <Eye style={styles.icon} stroke="black" />
+          ) : (
+            <EyeOff style={styles.icon} stroke="black" />
+          )}
+        </TouchableWithoutFeedback>
       </YStack>
 
       {signUp && (
@@ -97,7 +101,7 @@ const EmailAuth = ({ signUp = false, loading, submit }: EmailAuthProps) => {
           />
         </YStack>
       )}
-      {error && <Text style={{ color: 'red' }}>{error.message}</Text>}
+      {error && <Text style={{ color: '#FF0000' }}>{error.message}</Text>}
       <Form.Trigger asChild>
         <Button disabled={loading}>
           {!loading ? `${signUp ? 'Sign up' : 'Log in'}` : <Spinner size="small" />}
