@@ -24,6 +24,7 @@ const Login = () => {
   }));
   const router = useRouter();
   if (isLoggedIn) {
+    //@ts-ignore
     router.replace('/(tabs)allPosts');
   }
   const handleSubmit = useCallback(
@@ -31,7 +32,8 @@ const Login = () => {
       setLoading(true);
       const error = await logIn(email, password);
       if (error) Alert.alert(error.message);
-      else setLoading(false);
+
+      setLoading(false);
     },
     [logIn, setLoading]
   );

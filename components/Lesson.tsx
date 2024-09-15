@@ -3,7 +3,7 @@ import React from 'react';
 import { Adapt, Card, H3, ListItem, Paragraph, Popover, XStack, YStack } from 'tamagui';
 import { Lesson as LessonType } from '~/constants/types';
 import { images } from '~/constants/images';
-import { CircleCheck, CircleX } from 'lucide-react-native';
+import { CircleCheck, CircleX, Ellipsis } from 'lucide-react-native';
 import * as Linking from 'expo-linking';
 import { Ellipsis, BookmarkPlus, Eye } from 'lucide-react-native';
 
@@ -19,11 +19,14 @@ const styles = StyleSheet.create({
 });
 
 const Lesson = (props: LessonType) => {
+  const pressButton = () => {
+    console.log('p');
+  };
   return (
     <View>
       <TouchableOpacity onPress={() => Linking.openURL(props.link)}>
         <Card
-          style={styles.container}
+          position="relative"
           padding="$2"
           width="$13"
           bordered={true}

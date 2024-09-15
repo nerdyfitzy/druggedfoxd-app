@@ -28,12 +28,13 @@ const SignUp = () => {
       setLoading(true);
       const { error, data } = await signUp(email, password);
       if (error) Alert.alert(error.message);
-      if (!data.session) Alert.alert('Check inbox for an email confirmation!');
+      else if (!data.session) Alert.alert('Check inbox for an email confirmation!');
       setLoading(false);
     },
     [signUp, setLoading]
   );
 
+  //@ts-ignore
   if (isLoggedIn) router.replace('/(tabs)allPosts');
 
   return (
